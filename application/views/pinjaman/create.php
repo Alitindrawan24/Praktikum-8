@@ -41,7 +41,7 @@
 							<button type="submit" class="btn btn-success">Simpan</button>
 						</td>
 					</tr>
-				</table>
+				</table>				
 				</form>
 			</div>
 		</div>

@@ -13,7 +13,7 @@ class PinjamanController extends CI_Controller {
 	public $folder = 'pinjaman';
 
 	public function index(){
-		$data['pinjaman'] = $this->Pinjaman->load_data()->result_array();		
+		$data['pinjaman'] = $this->Pinjaman->load_data()->result_array();
 		$this->load->view('layout/top');
 		$this->load->view($this->folder.'/index',$data);
 		$this->load->view('layout/bottom');
@@ -29,7 +29,8 @@ class PinjamanController extends CI_Controller {
 	}
 
 	public function edit($id){		
-		$data['pinjaman'] = $this->Pinjaman->load_one_data($id)->result_array();		
+		$data['pinjaman'] = $this->Pinjaman->load_one_data($id)->result_array();
+		$data['buku'] = $this->Pinjaman->load_one_buku($id)->result_array();		
 		$this->load->view('layout/top');
 		$this->load->view($this->folder.'/edit', $data);
 		$this->load->view('layout/bottom');
@@ -86,8 +87,8 @@ class PinjamanController extends CI_Controller {
 	}
 
 	public function destroy($id){
-		$where = array('id_pinjam' => $id);
-		$this->Pinjaman->hapus_data($where,'Pinjaman');		
+		$where = array('kd_pinjam' => $id);
+		$this->Pinjaman->hapus_data($where,'Peminjaman','detail_pinjam');		
 		redirect(base_url().'index.php/pinjaman','refresh');
 	}
 }
