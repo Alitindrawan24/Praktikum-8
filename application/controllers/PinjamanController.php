@@ -13,7 +13,7 @@ class PinjamanController extends CI_Controller {
 	public $folder = 'pinjaman';
 
 	public function index(){
-		$data['pinjaman'] = $this->Pinjaman->load_data()->result_array();
+		$data['pinjaman'] = $this->Pinjaman->load_data()->result_array();		
 		$this->load->view('layout/top');
 		$this->load->view($this->folder.'/index',$data);
 		$this->load->view('layout/bottom');
@@ -36,20 +36,31 @@ class PinjamanController extends CI_Controller {
 	}
 
 	public function store(){
-		$judul_buku = $this->input->post('judul_buku');
-		$pengarang = $this->input->post('pengarang');
-		$penerbit = $this->input->post('penerbit');
-		$tahun_terbit = $this->input->post('tahun_terbit');
+		$kd_anggota = $this->input->post('kd_anggota');
+		$kd_pegawai = $this->input->post('kd_petugas');
+		
 
 		$data = array(
-			'judul_buku' => $judul_buku,			
-			'pengarang' => $pengarang,
-			'penerbit' => $penerbit,
-			'tahun_terbit' => $tahun_terbit
-		);
+			'kd_anggota' => $kd_anggota,
+			'kd_petugas' => $kd_pegawai
+		);		
 
-		$this->Buku->input_data($data,'Buku');	
-		redirect(base_url().'index.php/buku','refresh');
+		$insertId = $this->Pinjaman->input_data($data,'Peminjaman');
+
+		foreach ($this->input->post('buku') as $key) {
+			$data2 = array(
+				'kd_register' => $key,
+				'kd_pinjam' => $insertId,
+				'tgl_pinjam' => date('Y-m-d'),
+				'tgl_kembali' => null
+			);
+
+			$this->Pinjaman->input_data2($data2, 'detail_pinjam');			
+		}		
+
+
+
+		redirect(base_url().'index.php/pinjaman','refresh');
 	}
 
 	public function update(){

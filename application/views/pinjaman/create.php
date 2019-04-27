@@ -9,7 +9,7 @@
 		        	<tr>
 		        		<td>Nama Anggota</td>
 						<td>
-							<select name="nama_anggota" class="form-control">
+							<select name="kd_anggota" class="form-control">
 								<option selected hidden disabled value="">Pilih anggota</option>
 								<?php foreach ($anggota as $val): ?>
 									<option value="<?php echo $val['kd_anggota']; ?>"><?php echo $val['nama']; ?></option>
@@ -20,7 +20,7 @@
 					<tr>
 		        		<td>Nama Petugas</td>
 						<td>
-							<select name="nama_petugas" class="form-control">
+							<select name="kd_petugas" class="form-control">
 								<option selected hidden disabled value="">Pilih petugas</option>
 								<?php foreach ($petugas as $val): ?>
 									<option value="<?php echo $val['kd_petugas']; ?>"><?php echo $val['nama']; ?></option>
@@ -31,8 +31,8 @@
 					<tr>
 		        		<td>Judul Buku</td>
 						<td>
-							<?php foreach ($buku as $val): ?>
-								<input type="checkbox" name="buku[]"> <?php echo $val['judul_buku']; ?>
+							<?php foreach ($buku as $val): ?>								
+								<input type="checkbox" name="buku[]" value="<?php echo $val['kd_register']; ?>"> <?php echo $val['judul_buku']; ?>
 							<?php endforeach; ?>
 						</td>
 					</tr>					

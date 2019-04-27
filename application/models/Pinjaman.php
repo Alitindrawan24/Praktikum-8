@@ -5,7 +5,13 @@
 		}
 
 		public function load_data(){
-			return $this->db->get('peminjaman');
+			$this->db->from('peminjaman');
+			$this->db->select('petugas.nama as nama1, anggota.nama as nama2,judul_buku,detail_pinjam.*');
+			$this->db->join('petugas','petugas.kd_petugas=peminjaman.kd_petugas');
+			$this->db->join('anggota','anggota.kd_anggota=peminjaman.kd_anggota');
+			$this->db->join('detail_pinjam','detail_pinjam.kd_pinjam=peminjaman.kd_pinjam');
+			$this->db->join('buku','buku.kd_register=detail_pinjam.kd_register');
+			return $this->db->get();
 		}
 
 		public function load_anggota(){
@@ -26,6 +32,13 @@
 
 		public function input_data($data,$table){
 			$this->db->insert($table,$data);
+			$insertId = $this->db->insert_id();
+
+			return $insertId;
+		}
+
+		public function input_data2($data,$table){
+			$this->db->insert($table,$data);			
 		}
 
 		public function update_data($data,$table,$where){
