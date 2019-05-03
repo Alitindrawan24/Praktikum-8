@@ -8,11 +8,20 @@ class PinjamanController extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Pinjaman');
 		$this->load->helper('url');
+		$this->load->library('session');
 	}	
 
 	public $folder = 'pinjaman';
 
+	public function checkLogin(){
+		$login = $this->session->userdata('login');
+		if(!isset($login)){
+			redirect('index.php/login');
+		}
+	}
+
 	public function index(){
+		$this->checkLogin();
 		$data['pinjaman'] = $this->Pinjaman->load_data()->result_array();
 		$this->load->view('layout/top');
 		$this->load->view($this->folder.'/index',$data);
@@ -20,6 +29,7 @@ class PinjamanController extends CI_Controller {
 	}
 
 	public function create(){		
+		$this->checkLogin();
 		$data['anggota'] = $this->Pinjaman->load_anggota()->result_array();
 		$data['petugas'] = $this->Pinjaman->load_petugas()->result_array();
 		$data['buku'] = $this->Pinjaman->load_buku()->result_array();
@@ -29,6 +39,7 @@ class PinjamanController extends CI_Controller {
 	}
 
 	public function edit($id){		
+		$this->checkLogin();
 		$data['pinjaman'] = $this->Pinjaman->load_one_data($id)->result_array();
 		$data['buku'] = $this->Pinjaman->load_one_buku($id)->result_array();		
 		$this->load->view('layout/top');
@@ -37,6 +48,7 @@ class PinjamanController extends CI_Controller {
 	}
 
 	public function store(){
+		$this->checkLogin();
 		$kd_anggota = $this->input->post('kd_anggota');
 		$kd_pegawai = $this->input->post('kd_petugas');
 		
@@ -60,11 +72,12 @@ class PinjamanController extends CI_Controller {
 		}		
 
 
-
+		$this->session->set_flashdata('message','Berhasil tambah data pinjaman');
 		redirect(base_url().'index.php/pinjaman','refresh');
 	}
 
 	public function update(){
+		$this->checkLogin();
 		$id = $this->input->post('kd_register');
 		$judul_buku = $this->input->post('judul_buku');
 		$pengarang = $this->input->post('pengarang');
@@ -82,13 +95,16 @@ class PinjamanController extends CI_Controller {
 			'kd_register' => $id
 		);
 
-		$this->Buku->update_data($data,'Buku',$where);	
+		$this->Buku->update_data($data,'Buku',$where);
+		$this->session->set_flashdata('message','Berhasil update data pinjaman');
 		redirect(base_url().'index.php/buku','refresh');
 	}
 
 	public function destroy($id){
+		$this->checkLogin();
 		$where = array('kd_pinjam' => $id);
-		$this->Pinjaman->hapus_data($where,'Peminjaman','detail_pinjam');		
+		$this->Pinjaman->hapus_data($where,'Peminjaman','detail_pinjam');
+		$this->session->set_flashdata('message','Berhasil hapus data pinjaman');
 		redirect(base_url().'index.php/pinjaman','refresh');
 	}
 }

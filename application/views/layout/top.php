@@ -17,9 +17,10 @@
 <body> 
 	<div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%">
 	  <h3 class="w3-bar-item">Menu</h3>
-	  <a href="#" class="w3-bar-item w3-button">Anggota</a>
-	  <a href="#" class="w3-bar-item w3-button">Buku</a>
-	  <a href="#" class="w3-bar-item w3-button">Pinjaman</a>
+	  <a href="<?php echo base_url().'index.php/anggota'; ?>" class="w3-bar-item w3-button">Anggota</a>
+	  <a href="<?php echo base_url().'index.php/buku'; ?>" class="w3-bar-item w3-button">Buku</a>
+	  <a href="<?php echo base_url().'index.php/pinjaman'; ?>" class="w3-bar-item w3-button">Pinjaman</a>
+	  <a href="<?php echo base_url().'index.php/logout'; ?>" class="w3-bar-item w3-button">Logout</a>
 	</div>
 	<div style="margin-left:15%">
 	<center>

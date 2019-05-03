@@ -54,6 +54,10 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 //Routes
+$route['login'] = 'logincontroller';
+$route['auth_login'] = 'logincontroller/login';
+$route['logout'] = 'logincontroller/logout';
+
 $route['buku'] = 'bukucontroller';
 $route['buku/create'] = 'bukucontroller/create';
 $route['buku/edit/(:num)'] = 'bukucontroller/edit/$1';

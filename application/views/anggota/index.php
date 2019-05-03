@@ -1,3 +1,6 @@
+<?php if($this->session->flashdata('message')): ?>
+	<center><h4 style="color: green;"><?php echo $this->session->flashdata('message'); ?></h4></center>
+<?php endif; ?>
 <h1>List Anggota</h1>
 <a href="anggota/create"><button class="btn btn-success">Tambah Anggota</button></a>
 <div class="container">

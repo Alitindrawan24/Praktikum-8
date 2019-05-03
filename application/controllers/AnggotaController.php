@@ -8,11 +8,20 @@ class AnggotaController extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Anggota');
 		$this->load->helper('url');
+		$this->load->library('session');
 	}	
 
 	public $folder = 'anggota';
 
+	public function checkLogin(){
+		$login = $this->session->userdata('login');
+		if(!isset($login)){
+			redirect('index.php/login');
+		}
+	}
+
 	public function index(){
+		$this->checkLogin();
 		$data['anggota'] = $this->Anggota->load_data()->result_array();
 		$this->load->view('layout/top');
 		$this->load->view($this->folder.'/index',$data);
@@ -20,12 +29,14 @@ class AnggotaController extends CI_Controller {
 	}
 
 	public function create(){		
+		$this->checkLogin();
 		$this->load->view('layout/top');
 		$this->load->view($this->folder.'/create');
 		$this->load->view('layout/bottom');
 	}
 
 	public function edit($id){		
+		$this->checkLogin();
 		$data['buku'] = $this->Anggota->load_one_data($id)->result_array();		
 		$this->load->view('layout/top');
 		$this->load->view($this->folder.'/edit', $data);
@@ -33,6 +44,7 @@ class AnggotaController extends CI_Controller {
 	}
 
 	public function store(){
+		$this->checkLogin();
 		$nama = $this->input->post('nama');
 		$prodi = $this->input->post('prodi');
 		$jenjang = $this->input->post('jenjang');
@@ -46,10 +58,12 @@ class AnggotaController extends CI_Controller {
 		);
 
 		$this->Anggota->input_data($data,'Anggota');	
+		$this->session->set_flashdata('message','Berhasil tambah data anggota');
 		redirect(base_url().'index.php/anggota','refresh');
 	}
 
 	public function update(){
+		$this->checkLogin();
 		$id = $this->input->post('kd_anggota');
 		$nama = $this->input->post('nama');
 		$prodi = $this->input->post('prodi');
@@ -68,12 +82,15 @@ class AnggotaController extends CI_Controller {
 		);
 
 		$this->Anggota->update_data($data,'Anggota',$where);	
+		$this->session->set_flashdata('message','Berhasil update data anggota');
 		redirect(base_url().'index.php/anggota','refresh');
 	}
 
 	public function destroy($id){
+		$this->checkLogin();
 		$where = array('kd_anggota' => $id);
 		$this->Anggota->hapus_data($where,'Anggota');		
+		$this->session->set_flashdata('message','Berhasil hapus data anggota');
 		redirect(base_url().'index.php/anggota','refresh');
 	}
 }

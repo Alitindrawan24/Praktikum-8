@@ -8,11 +8,20 @@ class BukuController extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Buku');
 		$this->load->helper('url');
+		$this->load->library('session');
 	}	
 
 	public $folder = 'buku';
 
+	public function checkLogin(){
+		$login = $this->session->userdata('login');
+		if(!isset($login)){
+			redirect('index.php/login');
+		}
+	}
+
 	public function index(){
+		$this->checkLogin();
 		$data['buku'] = $this->Buku->load_data()->result_array();
 		$this->load->view('layout/top');
 		$this->load->view($this->folder.'/index',$data);
@@ -20,12 +29,14 @@ class BukuController extends CI_Controller {
 	}
 
 	public function create(){		
+		$this->checkLogin();
 		$this->load->view('layout/top');
 		$this->load->view($this->folder.'/create');
 		$this->load->view('layout/bottom');
 	}
 
 	public function edit($id){		
+		$this->checkLogin();
 		$data['buku'] = $this->Buku->load_one_data($id)->result_array();		
 		$this->load->view('layout/top');
 		$this->load->view($this->folder.'/edit', $data);
@@ -33,6 +44,7 @@ class BukuController extends CI_Controller {
 	}
 
 	public function store(){
+		$this->checkLogin();
 		$judul_buku = $this->input->post('judul_buku');
 		$pengarang = $this->input->post('pengarang');
 		$penerbit = $this->input->post('penerbit');
@@ -46,10 +58,12 @@ class BukuController extends CI_Controller {
 		);
 
 		$this->Buku->input_data($data,'Buku');	
+		$this->session->set_flashdata('message','Berhasil update data buku');
 		redirect(base_url().'index.php/buku','refresh');
 	}
 
 	public function update(){
+		$this->checkLogin();
 		$id = $this->input->post('kd_register');
 		$judul_buku = $this->input->post('judul_buku');
 		$pengarang = $this->input->post('pengarang');
@@ -68,12 +82,15 @@ class BukuController extends CI_Controller {
 		);
 
 		$this->Buku->update_data($data,'Buku',$where);	
+		$this->session->set_flashdata('message','Berhasil update data buku');
 		redirect(base_url().'index.php/buku','refresh');
 	}
 
 	public function destroy($id){
+		$this->checkLogin();
 		$where = array('kd_register' => $id);
 		$this->Buku->hapus_data($where,'Buku');		
+		$this->session->set_flashdata('message','Berhasil hapus data buku');
 		redirect(base_url().'index.php/buku','refresh');
 	}
 }

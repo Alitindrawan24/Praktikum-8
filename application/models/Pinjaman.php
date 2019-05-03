@@ -20,7 +20,8 @@
 		}
 
 		public function load_petugas(){
-			return $this->db->get('petugas');
+			//return $this->db->get('petugas');
+			return $this->db->where('kd_petugas',$this->session->userdata('id'))->get('petugas');
 		}
 
 		public function load_buku(){

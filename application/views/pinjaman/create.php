@@ -20,10 +20,9 @@
 					<tr>
 		        		<td>Nama Petugas</td>
 						<td>
-							<select name="kd_petugas" class="form-control">
-								<option selected hidden disabled value="">Pilih petugas</option>
+							<select name="kd_petugas" class="form-control">					
 								<?php foreach ($petugas as $val): ?>
-									<option value="<?php echo $val['kd_petugas']; ?>"><?php echo $val['nama']; ?></option>
+									<option selected value="<?php echo $val['kd_petugas']; ?>"><?php echo $val['nama']; ?></option>
 								<?php endforeach; ?>
 							</select>
 						</td>

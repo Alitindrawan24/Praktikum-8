@@ -1,3 +1,6 @@
+<?php if($this->session->flashdata('message')): ?>
+	<center><h4 style="color: green;"><?php echo $this->session->flashdata('message'); ?></h4></center>
+<?php endif; ?>
 <h1>List Pinjaman</h1>
 <a href="pinjaman/create"><button class="btn btn-success">Buat Pinjaman</button></a>
 <div class="container">
