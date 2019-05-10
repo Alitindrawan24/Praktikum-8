@@ -4,7 +4,7 @@
 <h1>List Anggota</h1>
 <a href="anggota/create"><button class="btn btn-success">Tambah Anggota</button></a>
 <div class="container">
-	<table class="table table-hover table-bordered" style="margin:10px;width: 80%">
+	<table id="example" class="table table-hover table-bordered" style="margin:10px;width: 80%">
 		<thead>
 			<tr>
 				<td>Nama Anggota</td>
@@ -30,3 +30,13 @@
 		</tbody>
 	</table>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+    	$('#example').DataTable();
+	});
+</script>
