@@ -4,7 +4,7 @@
 	<div class="box">
 		<div class="box-body">
 	        <div class="row">
-	        	<form action="store" method="post">
+	        	<form id="formInput" method="post">
 	        	<table class="table" style="margin-top: 20px;width: 80%">	
 		        	<tr>
 		        		<td>Nama Anggota</td>
@@ -46,3 +46,20 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+ $(function() {
+    $("#formInput").submit(function(e){
+      dataForm = $(this).serializeArray();
+      $.ajax({
+        method : 'POST',
+        url : 'store',
+        data : dataForm,
+        success : function(data){                      
+            alert(data);
+        }        
+      })
+      e.preventDefault();
+    });
+});
+</script>

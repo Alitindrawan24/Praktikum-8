@@ -55,11 +55,18 @@ class BukuController extends CI_Controller {
 			'pengarang' => $pengarang,
 			'penerbit' => $penerbit,
 			'tahun_terbit' => $tahun_terbit
-		);
+		);		
 
-		$this->Buku->input_data($data,'Buku');	
-		$this->session->set_flashdata('message','Berhasil update data buku');
-		redirect(base_url().'index.php/buku','refresh');
+		if($this->Buku->input_data($data,'Buku')){
+			echo "Berhasil tambah data buku";
+		}
+		else{
+			$error = $this->db->error();
+			echo $error['message'];
+		}
+
+		// $this->session->set_flashdata('message','Berhasil update data buku');
+		// redirect(base_url().'index.php/buku','refresh');
 	}
 
 	public function update(){
@@ -79,18 +86,33 @@ class BukuController extends CI_Controller {
 
 		$where = array(
 			'kd_register' => $id
-		);
+		);		
 
-		$this->Buku->update_data($data,'Buku',$where);	
-		$this->session->set_flashdata('message','Berhasil update data buku');
-		redirect(base_url().'index.php/buku','refresh');
+		if($this->Buku->update_data($data,'Buku',$where)){
+			echo "Berhasil update data buku";
+		}
+		else{
+			$error = $this->db->error();
+			echo $error['message'];
+		}
+
+		// $this->session->set_flashdata('message','Berhasil update data buku');
+		// redirect(base_url().'index.php/buku','refresh');
 	}
 
 	public function destroy($id){
 		$this->checkLogin();
-		$where = array('kd_register' => $id);
-		$this->Buku->hapus_data($where,'Buku');		
-		$this->session->set_flashdata('message','Berhasil hapus data buku');
-		redirect(base_url().'index.php/buku','refresh');
+		$where = array('kd_register' => $id);		
+
+		if($this->Buku->hapus_data($where,'Buku')){
+			echo "Berhasil hapus data buku";
+		}
+		else{
+			$error = $this->db->error();
+			echo $error['message'];
+		}
+
+		// $this->session->set_flashdata('message','Berhasil hapus data buku');
+		// redirect(base_url().'index.php/buku','refresh');
 	}
 }

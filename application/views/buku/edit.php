@@ -4,7 +4,7 @@
 	<div class="box">
 		<div class="box-body">
 	        <div class="row">
-	        	<form action="<?php echo base_url().'index.php/buku/update'; ?>" method="post">
+	        	<form id="formUpdate" method="post">
 	        	<table class="table" style="margin-top: 20px;width: 80%">	
 	        		<?php foreach ($buku as $buku): ?>
 	        			<input type="hidden" name="kd_register" value="<?php echo $buku['kd_register']; ?>">
@@ -36,3 +36,20 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+ $(function() {
+    $("#formUpdate").submit(function(e){
+      dataForm = $(this).serializeArray();
+      $.ajax({
+        method : 'POST',
+        url : '<?php echo base_url().'index.php/buku/update'; ?>',
+        data : dataForm,
+        success : function(data){
+            alert(data);            
+        }        
+      })
+      e.preventDefault();
+    });
+});
+ </script>

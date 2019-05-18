@@ -43,7 +43,7 @@
 				<td id="jum_<?php echo $i; ?>"><?php echo $val['jumlah_buku']; ?></td>
 				<td>
 					<a href="pinjaman/edit/<?php echo $val['kd_pinjam']; ?>"><button class="btn btn-xs btn-warning"><i class="fa fa-edit"></i> Edit</button></a>
-					<a href="pinjaman/destroy/<?php echo $val['kd_pinjam']; ?>"><button class="btn btn-xs btn-danger"><i class="fa fa-thrash"></i> Hapus</button></a>
+					<button onclick="hapus(<?php echo $val['kd_pinjam']; ?>)" class="btn btn-xs btn-danger"><i class="fa fa-thrash"></i> Hapus</button>
 				</td>
 			</tr>
 			<?php $i++; ?>
@@ -127,3 +127,16 @@
 		$('#pagination').empty();
 	}
 </script>
+
+<script type="text/javascript">	
+	function hapus(id){
+		$.ajax({
+        method : 'POST',
+        url : 'pinjaman/destroy/'+id,        
+        success : function(data){        	
+            alert(data);         
+            //$('#example').DataTable().ajax.reload();   
+        }
+    })
+}
+ </script>

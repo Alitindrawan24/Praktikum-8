@@ -55,11 +55,17 @@ class AnggotaController extends CI_Controller {
 			'prodi' => $prodi,
 			'jenjang' => $jenjang,
 			'alamat' => $alamat
-		);
-
-		$this->Anggota->input_data($data,'Anggota');	
-		$this->session->set_flashdata('message','Berhasil tambah data anggota');
-		redirect(base_url().'index.php/anggota','refresh');
+		);	
+				
+		if($this->Anggota->input_data($data,'Anggota')){
+			echo "Berhasil tambah data anggota";
+		}
+		else{
+			$error = $this->db->error();
+			echo $error['message'];
+		}
+		//$this->session->set_flashdata('message','Berhasil tambah data anggota');
+		//redirect(base_url().'index.php/anggota','refresh');
 	}
 
 	public function update(){
@@ -79,18 +85,32 @@ class AnggotaController extends CI_Controller {
 
 		$where = array(
 			'kd_anggota' => $id
-		);
+		);		
 
-		$this->Anggota->update_data($data,'Anggota',$where);	
-		$this->session->set_flashdata('message','Berhasil update data anggota');
-		redirect(base_url().'index.php/anggota','refresh');
+		if($this->Anggota->update_data($data,'Anggota',$where)){
+			echo "Berhasil update data anggota";
+		}
+		else{
+			$error = $this->db->error();
+			echo $error['message'];
+		}
+		// $this->session->set_flashdata('message','Berhasil update data anggota');
+		// redirect(base_url().'index.php/anggota','refresh');
 	}
 
 	public function destroy($id){
 		$this->checkLogin();
-		$where = array('kd_anggota' => $id);
-		$this->Anggota->hapus_data($where,'Anggota');		
-		$this->session->set_flashdata('message','Berhasil hapus data anggota');
-		redirect(base_url().'index.php/anggota','refresh');
+		$where = array('kd_anggota' => $id);		
+
+		if($this->Anggota->hapus_data($where,'Anggota')){
+			echo "Berhasil hapus data anggota";
+		}
+		else{
+			$error = $this->db->error();
+			echo $error['message'];
+		}
+
+		//$this->session->set_flashdata('message','Berhasil hapus data anggota');
+		//redirect(base_url().'index.php/anggota','refresh');
 	}
 }

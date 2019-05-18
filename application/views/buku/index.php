@@ -23,7 +23,7 @@
 				<td><?php echo $val['tahun_terbit']; ?></td>
 				<td>
 					<a href="buku/edit/<?php echo $val['kd_register']; ?>"><button class="btn btn-xs btn-warning"><i class="fa fa-edit"></i> Edit</button></a>
-					<a href="buku/destroy/<?php echo $val['kd_register']; ?>"><button class="btn btn-xs btn-danger"><i class="fa fa-thrash"></i> Hapus</button></a>
+					<button onclick="hapus(<?php echo $val['kd_register']; ?>)" class="btn btn-xs btn-danger"><i class="fa fa-thrash"></i> Hapus</button>
 				</td>
 			</tr>
 		<?php endforeach; ?>
@@ -40,3 +40,16 @@
     	$('#example').DataTable();
 	});
 </script>
+
+<script type="text/javascript">
+	function hapus(id){
+		$.ajax({
+        method : 'POST',
+        url : 'buku/destroy/'+id,        
+        success : function(data){        	
+            alert(data);         
+            //$('#example').DataTable().ajax.reload();   
+        }
+    })
+}
+ </script>

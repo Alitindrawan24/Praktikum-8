@@ -68,12 +68,24 @@ class PinjamanController extends CI_Controller {
 				'tgl_kembali' => null
 			);
 
-			$this->Pinjaman->input_data2($data2, 'detail_pinjam');			
+			if($this->Pinjaman->input_data2($data2, 'detail_pinjam')){
+				$query = true;
+			}
+			else{
+				$query = false;
+			}
 		}		
 
+		if($query){
+			echo "Berhasil tambah data pinjaman";
+		}
+		else{
+			$error = $this->db->error();
+			echo $error['message'];
+		}
 
-		$this->session->set_flashdata('message','Berhasil tambah data pinjaman');
-		redirect(base_url().'index.php/pinjaman','refresh');
+		// $this->session->set_flashdata('message','Berhasil tambah data pinjaman');
+		// redirect(base_url().'index.php/pinjaman','refresh');
 	}
 
 	public function update(){
@@ -93,18 +105,33 @@ class PinjamanController extends CI_Controller {
 
 		$where = array(
 			'kd_register' => $id
-		);
+		);		
 
-		$this->Buku->update_data($data,'Buku',$where);
-		$this->session->set_flashdata('message','Berhasil update data pinjaman');
-		redirect(base_url().'index.php/buku','refresh');
+		if($this->Buku->update_data($data,'Buku',$where)){
+			echo "Berhasil update data pinjaman";
+		}
+		else{
+			$error = $this->db->error();
+			echo $error['message'];
+		}
+
+		// $this->session->set_flashdata('message','Berhasil update data pinjaman');
+		// redirect(base_url().'index.php/buku','refresh');
 	}
 
 	public function destroy($id){
 		$this->checkLogin();
 		$where = array('kd_pinjam' => $id);
-		$this->Pinjaman->hapus_data($where,'Peminjaman','detail_pinjam');
-		$this->session->set_flashdata('message','Berhasil hapus data pinjaman');
-		redirect(base_url().'index.php/pinjaman','refresh');
+		
+		if($this->Pinjaman->hapus_data($where,'Peminjaman','detail_pinjam')){
+			echo "Berhasil hapus data pinjaman";
+		}
+		else{
+			$error = $this->db->error();
+			echo $error['message'];
+		}
+
+		// $this->session->set_flashdata('message','Berhasil hapus data pinjaman');
+		// redirect(base_url().'index.php/pinjaman','refresh');
 	}
 }

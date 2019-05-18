@@ -23,7 +23,7 @@
 				<td><?php echo $val['alamat']; ?></td>
 				<td>
 					<a href="anggota/edit/<?php echo $val['kd_anggota']; ?>"><button class="btn btn-xs btn-warning"><i class="fa fa-edit"></i> Edit</button></a>
-					<a href="anggota/destroy/<?php echo $val['kd_anggota']; ?>"><button class="btn btn-xs btn-danger"><i class="fa fa-thrash"></i> Hapus</button></a>
+					<button onclick="hapus(<?php echo $val['kd_anggota']; ?>)" class="btn btn-xs btn-danger"><i class="fa fa-thrash"></i> Hapus</button>
 				</td>
 			</tr>
 		<?php endforeach; ?>
@@ -40,3 +40,16 @@
     	$('#example').DataTable();
 	});
 </script>
+
+<script type="text/javascript">
+	function hapus(id){
+		$.ajax({
+        method : 'POST',
+        url : 'anggota/destroy/'+id,        
+        success : function(data){        	
+            alert(data);         
+            //$('#example').DataTable().ajax.reload();   
+        }
+    })
+}
+ </script>
